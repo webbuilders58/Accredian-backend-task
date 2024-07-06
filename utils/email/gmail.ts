@@ -1,7 +1,7 @@
 import { google } from 'googleapis'
 import credentials from './cred.json' with {type:"json"}
 import tokens from './token.json' with { type: 'json' }
-import MailComposer from 'nodemailer/lib/mail-composer' 
+import MailComposer from 'nodemailer/lib/mail-composer/index.js' 
 
 const getGmailService = () => {
   const { client_secret, client_id, redirect_uris } = credentials.installed
@@ -32,6 +32,7 @@ const createMail = async (options: any) => {
 export const sendMail = async (options: any) => {
   const gmail = getGmailService()
   const rawMessage = await createMail(options)
+  //@ts-ignore
   const resp = await gmail.users.messages.send({
     userId: 'me',
     resource: {
